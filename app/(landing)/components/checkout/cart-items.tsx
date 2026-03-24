@@ -6,6 +6,7 @@ import Button from "../ui/button";
 import { FiCreditCard, FiTrash2 } from "react-icons/fi";
 import CardWithHeader from "../ui/card-with-header";
 import { useRouter } from "next/navigation";
+import type { CartItem } from "@/app/hooks/use-cart-store";
 import { useCartStore } from "@/app/hooks/use-cart-store";
 import { getImageUrl } from "@/app/lib/api";
 
@@ -14,11 +15,12 @@ type TCartItems = {
 };
 
 const CartItems = ({ handlePayment }: TCartItems) => {
-  const { items, removeItem } = useCartStore();
+  const items = useCartStore((state) => state.items) as CartItem[];
+  const removeItem = useCartStore((state) => state.removeItem);
   const { push } = useRouter();
 
   const totalPrice = items.reduce(
-    (total, item) => total + item.price * item.qty,
+    (total, item: any) => total + item.price * item.qty,
     0
   );
 
@@ -26,7 +28,7 @@ const CartItems = ({ handlePayment }: TCartItems) => {
     <CardWithHeader title="Cart Items">
       <div className="flex flex-col justify-between h-[calc(100%-70px)]">
         <div className="overflow-auto max-h-[300px] ">
-          {items.map((item) => (
+          {items.map((item: any) => (
             <div
               className="border-b border-gray-200 p-4 flex gap-3"
               key={item._id}
