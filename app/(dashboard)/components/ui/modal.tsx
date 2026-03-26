@@ -1,7 +1,7 @@
 import { FiX } from "react-icons/fi";
 
 type TModalProps = {
-  isOpen: boolean; // true / false
+  isOpen: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
